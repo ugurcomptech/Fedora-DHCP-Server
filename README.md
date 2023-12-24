@@ -126,6 +126,64 @@ lease 172.16.1.150 {
 }
 ```
 
+Şimdi logları bir dosyaya yazdıralım ilk önce `nano /etc/dhcp/dhcpd.conf` yoluna giderek aşağıdaki komutu yazınız:
+
+```
+# event logs
+log-facility local7; # 7 sayısı Network loglarını temsil eder.
+```
+
+İşlemimize devam etmek için **rsyslogu** indireceğiz
+
+```
+[root@fedoraserver etc]# sudo dnf install rsyslog
+Last metadata expiration check: 0:19:58 ago on Sun 24 Dec 2023 02:23:35 PM +03.
+Package rsyslog-8.2310.0-1.fc39.x86_64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+```
+
+Şimdi `nano /etc/rsyslog.conf` yoluna giderek gerekli yapılandırmaları yapalım. Dosyayı açtığımızda `#Save boot messages also to boot.log` kısmını bulup aşağıdaki komutu yazıyoruz
+
+```
+# Save boot messages also to boot.log
+local7.*                                                /var/log/boot.log # bunu silmenize gerek yok
+local7.*                                                /var/log/dhcp.log # Loglanacak dosya yolu
+```
+
+Bunları yaptıktan sonra servisi yeniden başlatacağız:
+
+```
+systemctl restart rsyslog.service
+systemctl restart dhcpd
+```
+
+Gerekli işlemleri yaptıktan sonra Windows Sanal Makinanızın internetini kapatıp açabilirsiniz. `nano /var/log/dhcp.log` dosya yoluna gittiğinizde aşağıda ki logları göreceksiniz
+
+### Loglar
+```
+  GNU nano 7.2                                                                                                  /var/log/dhcp.log                                                                                                            Dec 24 14:39:00 fedoraserver dhcpd[1445]: Internet Systems Consortium DHCP Server 4.4.3-P1
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Copyright 2004-2022 Internet Systems Consortium.
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: All rights reserved.
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: For info, please visit https://www.isc.org/software/dhcp/
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Source compiled to use binary-leases
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Wrote 1 leases to leases file.
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Listening on LPF/ens160/00:0c:29:c2:57:20/172.16.1.0/24
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Sending on   LPF/ens160/00:0c:29:c2:57:20/172.16.1.0/24
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Sending on   Socket/fallback/fallback-net
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Server starting service.
+Dec 24 14:39:29 fedoraserver dhcpd[1445]: DHCPDISCOVER from 00:0c:29:b7:57:f7 via ens160
+Dec 24 14:39:30 fedoraserver dhcpd[1445]: DHCPOFFER on 172.16.1.150 to 00:0c:29:b7:57:f7 (DESKTOP-VN7AMBD) via ens160
+Dec 24 14:39:30 fedoraserver dhcpd[1445]: DHCPREQUEST for 172.16.1.150 (172.16.1.20) from 00:0c:29:b7:57:f7 (DESKTOP-VN7AMBD) via ens160
+Dec 24 14:39:30 fedoraserver dhcpd[1445]: DHCPACK on 172.16.1.150 to 00:0c:29:b7:57:f7 (DESKTOP-VN7AMBD) via ens160
+Dec 24 14:44:30 fedoraserver dhcpd[1445]: DHCPREQUEST for 172.16.1.150 from 00:0c:29:b7:57:f7 (DESKTOP-VN7AMBD) via ens160
+Dec 24 14:44:30 fedoraserver dhcpd[1445]: DHCPACK on 172.16.1.150 to 00:0c:29:b7:57:f7 (DESKTOP-VN7AMBD) via ens160
+```
+
+
+
+
 
 
 
