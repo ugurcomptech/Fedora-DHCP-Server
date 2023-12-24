@@ -163,7 +163,7 @@ Gerekli işlemleri yaptıktan sonra Windows Sanal Makinanızın internetini kapa
 
 ### Loglar
 ```
-  GNU nano 7.2                                                                                                  /var/log/dhcp.log                                                                                                            Dec 24 14:39:00 fedoraserver dhcpd[1445]: Internet Systems Consortium DHCP Server 4.4.3-P1
+Dec 24 14:39:00 fedoraserver dhcpd[1445]: Internet Systems Consortium DHCP Server 4.4.3-P1
 Dec 24 14:39:00 fedoraserver dhcpd[1445]: Copyright 2004-2022 Internet Systems Consortium.
 Dec 24 14:39:00 fedoraserver dhcpd[1445]: All rights reserved.
 Dec 24 14:39:00 fedoraserver dhcpd[1445]: For info, please visit https://www.isc.org/software/dhcp/
