@@ -98,8 +98,33 @@ journalctl -xeu dhcpd.service
 
 Serverımız başarılı bir şekilde çalıştı.
 
+Aşağıda ki dosya yoluna giderek  IP kiralama loglarına bakabilirsiniz:
 
+```
+nano /var/lib/dhcpd/dhcpd.leases
+```
+```
+# The format of this file is documented in the dhcpd.leases(5) manual page.
+# This lease file was written by isc-dhcp-4.4.3-P1
 
+# authoring-byte-order entry is generated, DO NOT DELETE
+authoring-byte-order little-endian;
+
+server-duid "\000\001\000\001-\032\306\004\000\014)\302W ";
+
+lease 172.16.1.150 {
+  starts 0 2023/12/24 10:53:57;
+  ends 0 2023/12/24 11:03:57;
+  cltt 0 2023/12/24 10:53:57;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 00:0c:29:b7:57:f7;
+  uid "\001\000\014)\267W\367";
+  set vendor-class-identifier = "MSFT 5.0";
+  client-hostname "WIN-SKI3OII7L7G";
+}
+```
 
 
 
