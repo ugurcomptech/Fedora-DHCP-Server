@@ -1,8 +1,6 @@
-# Fedora-DHCP-Server
+# Fedora DCHP Server Kurulumu
 
-Bu yazımızda Fedora Server da nasıl DHCP Server kuracağız onları göstereceğim.
-
-Elinizde hazır Fedora Server kullanıyorsunuz diye varsayıyorum.
+Bu yazıda, Fedora Server üzerinde basit bir şekilde DHCP (Dynamic Host Configuration Protocol) sunucusu kurmayı göstereceğim. DHCP sunucusu, ağdaki cihazlara otomatik IP adresleri atamak ve ağ yapılandırmasını kolaylaştırmak için kullanılır.
 
 ## Kurulum
 
