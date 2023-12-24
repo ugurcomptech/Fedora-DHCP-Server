@@ -4,6 +4,8 @@ Bu yazımızda Fedora Server da nasıl DHCP Server kuracağız onları gösterec
 
 Elinizde hazır Fedora Server kullanıyorsunuz diye varsayıyorum.
 
+## Kurulum
+
 Terminale veya Konsola aşağıda ki komutları yazalım:
 
 ```
@@ -98,6 +100,9 @@ journalctl -xeu dhcpd.service
 
 Serverımız başarılı bir şekilde çalıştı.
 
+
+## LOG
+
 Aşağıda ki dosya yoluna giderek  IP kiralama loglarına bakabilirsiniz:
 
 ```
@@ -182,6 +187,36 @@ Dec 24 14:44:30 fedoraserver dhcpd[1445]: DHCPACK on 172.16.1.150 to 00:0c:29:b7
 ```
 
 
+## IP Rezervasyon
+
+Bu işlemi yapmamızdaki sebeplerden birisi şu; Örneğin DHCP Serverdan tarafından bir bilgisayara 172.16.1.155 IP adresi atanmış ve Firewallda ise bu IP adresinin facebook.com sitesine gitmek yasak diye varsayalım. Bu IP adresi başka bir bilgisayara atandığında artık o bilgisayar facebook.com web sitesine gidemeyecek. Aynısı mobil cihazlar içinde geçerlidir.
+
+Bu işlemi yapmak basittir. İlk önce `nano /etc/dhcp/dhcpd.conf` dosya yoluna gidip aşağıda ki kodu yazınız:
+
+```
+host win {
+    hardware ethernet 00:0C:29:B7:57:F7; # Cihazın Mac Adresi
+    fixed-address 172.16.1.155; # Rezervasyon yapılacak IP Adresi
+}
+```
+
+Bunu yaptıktan sonra dhcp servisini yeniden başlatalım:
+
+```
+systemctl restart dhcpd.service
+```
+
+Bunu yaptıktan sonra Windows Makinamızda terminale aşağıda ki komutları yazarak Rezervasyon yaptığımız IP adresini atama işlemini kontrol edebilirsiniz.
+
+```
+ipconfig /release # Mevcut IP adresini bırakmak için kullanılır.
+ipconfig /renew # Yeni bir IP adresi talep etmek ve almak için kullanılır.
+```
+
+![image](https://github.com/ugurcomptech/Fedora-DHCP-Server/assets/133202238/3963989f-b3d5-4b73-906d-cfacca2849d9)
+
+
+![image](https://github.com/ugurcomptech/Fedora-DHCP-Server/assets/133202238/cd1371bb-0d36-45c6-82cf-1ac2c6086f1d)
 
 
 
